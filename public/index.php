@@ -176,12 +176,15 @@ if (!$debug_mode) {
     <link rel="stylesheet" href="style.css">
     <script src="cursor-effect.js" type="module"></script>
     <script src="js.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
     <title>My Guestbook</title>
 </head>
 <body>
     <div class="container">
         <marquee behavior="alternate" scrollamount="3">
-            <h1>~*~ My Guestbook ~*~</h1>
+            <h1>My Guestbook</h1>
         </marquee>
         <div class="welcome-message">
             <span style="color:#ff6699;">★</span>
