@@ -221,17 +221,37 @@ if (!$debug_mode) {
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                 <div class="form-group">
-                    <label for="name">Name*:</label>
+                    <label for="name">Navn:</label>
                     <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="website">Website:</label>
-                    <input type="url" id="website" name="website" maxlength="200" placeholder="https://your-website.com" value="<?php echo isset($_COOKIE['guestbook_website']) ? htmlspecialchars($_COOKIE['guestbook_website']) : ''; ?>">
+                    <label for="name">Det er jeg bedst til:</label>
+                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="message">Message*:</label>
+                    <label for="name">Hvad ville jeg være som barn:</label>
+                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Mit største ønske er:</label>
+                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Min livret:</label>
+                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Det syntes jeg er sejt: </label>
+                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Skriv en besked til du holder af:</label>
                     <textarea id="message" name="message" aria-required="true" maxlength="500" placeholder="Leave your message here..."></textarea>
                 </div>
 
