@@ -1,171 +1,136 @@
 <?php
 // Simple Guestbook with SQLite
 
-// Debug mode flag - Set to true for development, false for production
+// Debug mode flag - Set til true for udvikling, false for produktion
 $debug_mode = false;
 
-// Database configuration
+// Database konfiguration
 $db_file = '../guestbook.sqlite';
 
-// Initialize SQLite database
+// Start session for både cookie og CSRF håndtering
+session_start();
+
+// Opret forbindelse til SQLite databasen
 try {
     $pdo = new PDO("sqlite:{$db_file}");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create a table if it doesn't exist
+    // Opret tabel hvis den ikke eksisterer (inkl. nye kolonner)
     $pdo->exec('
         CREATE TABLE IF NOT EXISTS entries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            message TEXT NOT NULL,
+            best TEXT,
+            childhood TEXT,
+            wish TEXT,
+            food TEXT,
+            cool TEXT,
             website TEXT,
+            message TEXT NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ');
 } catch (PDOException $e) {
+    // Fejl ved databaseforbindelse
     if ($debug_mode) {
-        die("Database error: {$e->getMessage()}");
+        die("Database fejl: {$e->getMessage()}");
     }
-
-    /** @noinspection ForgottenDebugOutputInspection */
-    error_log("Critical database error: {$e->getMessage()}");
-    die('Database connection error. Please try again later.');
+    error_log("Kritisk database fejl: {$e->getMessage()}");
+    die('Database forbindelse fejl. Prøv igen senere.');
 }
 
-// Start session at the beginning for both cookie and CSRF handling
-session_start();
-
-// Handle form submission
+// Håndterer formular submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Add CSRF protection
+    // CSRF beskyttelse
     $csrf_token = $_POST['csrf_token'] ?? '';
     if (empty($_SESSION['csrf_token']) || $csrf_token !== $_SESSION['csrf_token']) {
-        $error = 'Invalid form submission';
+        $error = 'Ugyldig formular indsendelse';
     } else {
-        // Get and sanitize input
-        $name = trim($_POST['name'] ?? '');
-        $website = trim($_POST['website'] ?? '');
-        $message = trim($_POST['message'] ?? '');
+        // Hent og rens input fra formularen
+        $name      = trim($_POST['name'] ?? '');
+        $best      = trim($_POST['best'] ?? '');
+        $childhood = trim($_POST['childhood'] ?? '');
+        $wish      = trim($_POST['wish'] ?? '');
+        $food      = trim($_POST['food'] ?? '');
+        $cool      = trim($_POST['cool'] ?? '');
+        $website   = trim($_POST['website'] ?? '');
+        $message   = trim($_POST['message'] ?? '');
 
-        // Basic validation
+        // Simpel validering
         if (empty($name) || empty($message)) {
-            $error = 'Please fill in both name and message.';
+            $error = 'Udfyld venligst både navn og besked.';
         } elseif (strlen($name) > 100) {
-            $error = 'Name is too long (maximum 100 characters).';
+            $error = 'Navnet er for langt (max 100 tegn).';
         } elseif (strlen($message) > 500) {
-            $error = 'Message is too long (maximum 500 characters).';
+            $error = 'Beskeden er for lang (max 500 tegn).';
         } elseif (!empty($website)) {
-            // Validate website URL if provided
+            // Valider website URL hvis udfyldt
             if (strlen($website) > 200) {
-                $error = 'Website URL is too long (maximum 200 characters).';
+                $error = 'Website URL er for lang (max 200 tegn).';
             } elseif (!filter_var($website, FILTER_VALIDATE_URL)) {
-                $error = 'Please enter a valid website URL or leave it empty.';
+                $error = 'Indtast en gyldig website URL eller lad feltet være tomt.';
             }
         }
 
-        // If validation passed, insert the entry
+        // Hvis validering er godkendt, indsæt i databasen
         if (!isset($error)) {
             try {
                 $stmt = $pdo->prepare('
-                    INSERT INTO
-                        entries
-                        (name, website, message)
+                    INSERT INTO entries
+                        (name, best, childhood, wish, food, cool, website, message)
                     VALUES
-                        (?, ?, ?)
+                        (?, ?, ?, ?, ?, ?, ?, ?)
                 ');
-                $stmt->execute([$name, $website, $message]);
+                $stmt->execute([$name, $best, $childhood, $wish, $food, $cool, $website, $message]);
 
-                // Store name and website in cookies for 30 days (1 month)
-                $expiry = time() + (30 * 24 * 60 * 60); // 30 days in seconds
-
-                // Configure cookie options based on debug mode
+                // Gem navn og website i cookies i 30 dage
+                $expiry = time() + (30 * 24 * 60 * 60); // 30 dage
                 $cookie_options = [
                     'expires' => $expiry,
                     'path' => '/',
                     'httponly' => true,
-                    'secure' => !$debug_mode, // Secure in production only
-                    'samesite' => $debug_mode ? 'Lax' : 'Strict' // Lax in debug mode, Strict in production
+                    'secure' => !$debug_mode,
+                    'samesite' => $debug_mode ? 'Lax' : 'Strict'
                 ];
-
-                // Set the cookies
                 setcookie('guestbook_name', $name, $cookie_options);
-
                 if (!empty($website)) {
                     setcookie('guestbook_website', $website, $cookie_options);
                 }
 
-                // Redirect after successful submission to prevent form resubmission
+                // Redirect for at forhindre gensendelse af formen
                 header("Location: {$_SERVER['PHP_SELF']}");
                 exit;
             } catch (PDOException $e) {
-                // Show detailed error in debug mode, generic message in production
+                // Database fejl under indsættelse
                 if ($debug_mode) {
-                    $error = "Database error: {$e->getMessage()}";
+                    $error = "Database fejl: {$e->getMessage()}";
                 } else {
-                    $error = 'Error saving entry.';
-                    // Log the actual error but don't display it to users in production
-                    /** @noinspection ForgottenDebugOutputInspection */
-                    error_log("Guestbook error: {$e->getMessage()}");
+                    $error = 'Fejl ved gemning af indlæg.';
+                    error_log("Guestbook fejl: {$e->getMessage()}");
                 }
             }
         }
     }
 }
 
-// Generate a new CSRF token for the form if needed
+// Generér ny CSRF token hvis nødvendigt
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Get all entries
+// Hent alle indlæg fra databasen
 try {
-    $stmt = $pdo->query('
-        SELECT
-            *
-        FROM
-            entries
-        ORDER BY
-            created_at DESC
-    ');
+    $stmt = $pdo->query('SELECT * FROM entries ORDER BY created_at DESC');
     $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $entries = [];
-
-    // Show detailed error in debug mode, generic message in production
     if ($debug_mode) {
-        $error = "Database error loading entries: {$e->getMessage()}";
+        $error = "Database fejl ved indlæsning: {$e->getMessage()}";
     } else {
-        $error = 'Error loading entries.';
-        // Log the actual error but don't display it to users in production
-        /** @noinspection ForgottenDebugOutputInspection */
-        error_log("Guestbook error: {$e->getMessage()}");
+        $error = 'Fejl ved indlæsning af indlæg.';
+        error_log("Guestbook fejl: {$e->getMessage()}");
     }
 }
-
-// Set security headers based on debug mode
-if (!$debug_mode) {
-    // Controls which resources can be loaded - prevents XSS attacks by restricting sources
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';");
-
-    // Prevents browsers from MIME-sniffing (interpreting files as a different content-type)
-    header('X-Content-Type-Options: nosniff');
-
-    // Prevents your page from being embedded in frames (clickjacking protection)
-    header('X-Frame-Options: DENY');
-
-    // Additional XSS protection for older browsers
-    header('X-XSS-Protection: 1; mode=block');
-
-    // Controls how much referrer information is included with requests
-    header('Referrer-Policy: strict-origin-when-cross-origin');
-} else {
-    // Prevents browsers from MIME-sniffing
-    header('X-Content-Type-Options: nosniff');
-
-    // Basic XSS protection
-    header('X-XSS-Protection: 1; mode=block');
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -226,28 +191,28 @@ if (!$debug_mode) {
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Det er jeg bedst til:</label>
-                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                    <label for="best">Det er jeg bedst til:</label>
+                    <input type="text" id="best" name="best" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Hvad ville jeg være som barn:</label>
-                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                    <label for="childhood">Hvad ville jeg være som barn:</label>
+                    <input type="text" id="childhood" name="childhood" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Mit største ønske er:</label>
-                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                    <label for="wish">Mit største ønske er:</label>
+                    <input type="text" id="wish" name="wish" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Min livret:</label>
-                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                    <label for="food">Min livret:</label>
+                    <input type="text" id="food" name="food" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Det syntes jeg er sejt: </label>
-                    <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                    <label for="cool">Det syntes jeg er sejt: </label>
+                    <input type="text" id="cool" name="cool" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
