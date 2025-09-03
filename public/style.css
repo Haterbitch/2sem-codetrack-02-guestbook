@@ -1,8 +1,20 @@
-body {
-    font-family: "Poiret One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+body { font-family: sans-serif; background: #f0f8ff; }
+.form-group { margin-bottom: 10px; }
+label { display: block; font-weight: bold; }
+.entry { background: #fff; margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+.error { background: #ffe0e0; color: #a00; padding: 10px; margin: 10px 0; }
+
+body{
+.roboto {
+             font-family: "Roboto", sans-serif;
+             font-optical-sizing: auto;
+             font-style: normal;
+             font-variation-settings:
+                 "wdth" 500;
+         }
 }
+
+
 body {
 
     background-color: #cce3ff;
@@ -37,7 +49,7 @@ h1:before, h1:after {
 .welcome-message {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 12px;
+    font-size: 20px;
 }
 .form-group {
     margin-bottom: 15px;
@@ -143,7 +155,7 @@ button:active {
     vertical-align: top;
 }
 a {
-    color: #0066cc;
+    color: #e615ab;
     text-decoration: underline;
 }
 a:hover {
@@ -154,18 +166,19 @@ a:hover {
     margin-bottom: 20px;
 }
 .toggle-button {
-    background: linear-gradient(to bottom, #6699cc, #336699);
-    color: white;
-    padding: 10px 20px;
-    border: 2px outset #6699cc;
-    border-radius: 4px;
+    background: linear-gradient(to bottom, #F21D44, #F272C5);
+    color: #DFF2F2;
+    padding: 20px 30px;
+    border: 2px outset #22F2A6;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
     font-family: inherit;
 }
 .toggle-button:hover {
-    background: linear-gradient(to bottom, #77aadd, #4477aa);
+    background: linear-gradient(to bottom, #3FBFBF, #F288A4);
+    color: black;
 }
 .toggle-button:active {
     border-style: inset;
@@ -198,3 +211,4 @@ blink {
 @keyframes blinker {
     50% { opacity: 0; }
 }
+

@@ -143,33 +143,31 @@ try {
     <script src="js.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=TASA+Explorer:wght@400..800&display=swap" rel="stylesheet">
     <title>My Guestbook</title>
 </head>
 <body>
     <div class="container">
         <marquee behavior="alternate" scrollamount="3">
-            <h1>My Guestbook</h1>
+            <h1>Min VenindeBog</h1>
         </marquee>
         <div class="welcome-message">
             <span style="color:#ff6699;">★</span>
-            Welcome to my <blink>AWESOME</blink> Homepage!
+            Velkommen til min <blink>VenindeBog</blink>
             <span style="color:#ff6699;">★</span>
             <br>
-            <span style="color:#6666cc; font-size:11px;">
-                You are visitor #<?php echo random_int(10000, 99999); ?> since 03/14/2000
-            </span>
+
             <br>
-            <div style="margin-top:8px; font-size:13px;">
-                This site is best viewed in Netscape Navigator 4.0 or Internet Explorer 5.0 at 800x600 resolution.
+            <div style="margin-top:10px; font-size:16px; font-style: italic">
+                Hvis du er var barn/ung i slut 90'erne eller 00'erne så har du sikkert udfyldt en Veninde bog. Her er min digitale version.
                 <br>
-                Please sign my guestbook to let me know you stopped by! <b>No</b> spam please! ^_^
+                <blink><b>Udfyld</b></blink> den selv, og <blink><b>send</b></blink> den videre og se hvem af dine veninder der udfylder <blink>★</blink
             </div>
         </div>
-
+<br>
         <div class="toggle-button-container">
             <button id="toggleFormButton" class="toggle-button" onclick="toggleGuestbookForm()">
-                Click here to sign my guestbook!
+                Udfyld VenindeBog her
             </button>
         </div>
 
@@ -257,26 +255,21 @@ try {
         <div class="footer">
             <div style="margin:15px 0; font-size:11px;">
                 <div style="margin-bottom:10px;">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAgMAAAAqbBEUAAAACVBMVEUAAAD///8AAABzxoNxAAAAAnRSTlMAAHaTzTgAAAAtSURBVHicY2DAD1SxwADDqAIsQIZqFAwahoZGDShoZGRktMGgkZFxowZuAAAoXwEg9KnZcAAAAABJRU5ErkJggg==" alt="under construction" class="construction-image construction-image-left">
                     <span class="construction-text">
-                        <blink>UNDER CONSTRUCTION</blink> - Please excuse our dust!
-                    </span>
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAgMAAAAqbBEUAAAACVBMVEUAAAD///8AAABzxoNxAAAAAnRSTlMAAHaTzTgAAAAtSURBVHicY2DAD1SxwADDqAIsQIZqFAwahoZGDShoZGRktMGgkZFxowZuAAAoXwEg9KnZcAAAAABJRU5ErkJggg==" alt="under construction" class="construction-image construction-image-right">
+                        <blink>UNDER CONSTRUCTION</blink> - Undskyld vi roder
                 </div>
                 <div style="margin:10px 0; color:#666699;">
-                    Made with <span style="color:#ff0000;">&hearts;</span> on a Pentium III using Notepad
+                    Made with <span style="color:#ff0000;">♡</span> for friendship and fun
                 </div>
                 <div style="margin-top:10px;">
-                    <a href="#" onclick="alert('Coming soon!');">Home</a> |
-                    <a href="#" onclick="alert('My photos will be uploaded when I scan them!');">Photos</a> |
-                    <a href="#" onclick="alert('My links page is under construction!');">Cool Links</a> |
+                    <a onclick="alert('If you have crazy friends, you have everything you’ll ever need.');">TRUE!</a> |
+                    <a href="https://www.instagram.com/haterbitchbukh/" >Lavet af:</a> |
+                    <a href="https://www.instagram.com/reel/DJKl1qpyjVJ/" >Wise Words</a> |
                     <a href="#" onclick="alert('You are already here!');">Guestbook</a>
-                </div>
-                <div style="margin-top:15px; font-size:10px; color:#999;">
-                    Copyright &copy; 2000-<?= date('Y') ?> | Last updated: 08/06/2025
                 </div>
             </div>
         </div>
     </div>
+    <script src="js.js"></script>
 </body>
 </html>
