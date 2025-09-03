@@ -27,11 +27,12 @@ body {
     padding: 20px;
 }
 .guestbook-form-container {
-    background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+    background: linear-gradient(to bottom, #EED0F2, #D4C7D9);
     padding: 25px;
     border-radius: 0;
-    border: 3px solid #9fc5e8;
+    border: 3px solid #e615ab;
     box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+    border-radius: 30px;
 }
 h1 {
     color: #0066cc;
@@ -58,7 +59,8 @@ label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #333399;
+    color: #e615ab;
+    border-radius: 20px;
 }
 input, textarea {
     width: 100%;
@@ -75,10 +77,10 @@ textarea {
     resize: vertical;
 }
 button {
-    background: linear-gradient(to bottom, #ff9900, #ff6600);
+    background: linear-gradient(to bottom, #3FBFBF, #F288A4);
     color: white;
     padding: 10px 20px;
-    border: 2px outset #ff9900;
+    border: 2px outset #3FBFBF;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;

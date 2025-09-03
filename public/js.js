@@ -43,3 +43,6 @@ document.getElementById('cool').addEventListener('blur', function() {
 document.getElementById('message').addEventListener('blur', function() {
     document.body.style.backgroundColor = '#F2EC91';
 });
+
+
+
