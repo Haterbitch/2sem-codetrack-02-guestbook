@@ -37,6 +37,9 @@ document.getElementById('wish').addEventListener('blur', function() {
 document.getElementById('food').addEventListener('blur', function() {
     document.body.style.backgroundColor = '#05DBF2';
 });
+document.getElementById('flame').addEventListener('blur', function() {
+    document.body.style.backgroundColor = '#ac87d3';
+});
 document.getElementById('cool').addEventListener('blur', function() {
     document.body.style.backgroundColor = '#07F285';
 });

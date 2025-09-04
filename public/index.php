@@ -184,37 +184,42 @@ try {
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                 <div class="form-group">
-                    <label for="name">Navn:</label>
+                    <label for="name">Navn?:</label>
                     <input type="text" id="name" name="name" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="best">Det er jeg bedst til:</label>
+                    <label for="best">Det er jeg bedst til?:</label>
                     <input type="text" id="best" name="best" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="childhood">Hvad ville jeg være som barn:</label>
+                    <label for="childhood">Hvad ville jeg være som barn?:</label>
                     <input type="text" id="childhood" name="childhood" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="wish">Mit største ønske er:</label>
+                    <label for="wish">Mit største ønske er?:</label>
                     <input type="text" id="wish" name="wish" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="food">Min livret:</label>
+                    <label for="food">Min livret?:</label>
                     <input type="text" id="food" name="food" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="cool">Det syntes jeg er sejt: </label>
+                    <label for="flame">Hvem er din Flamme?:</label>
+                    <input type="text" id="flame" name="flame" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="cool">Det syntes jeg er sejt?: </label>
                     <input type="text" id="cool" name="cool" aria-required="true" maxlength="100" value="<?php echo isset($_COOKIE['guestbook_name']) ? htmlspecialchars($_COOKIE['guestbook_name']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="message">Skriv en besked til du holder af:</label>
+                    <label for="message">Skriv en besked til en du holder af?:</label>
                     <textarea id="message" name="message" aria-required="true" maxlength="500" placeholder="Leave your message here..."></textarea>
                 </div>
 
@@ -245,12 +250,13 @@ try {
                             </span>
                         </div>
                         <div class="entry-message">
-                            <span class="enteriesspørgsmål"><p>Det er jeg bedst til:</p></span><?php echo htmlspecialchars($entry['best']); ?>
-                            <span class="enteriesspørgsmål"><p>Hvad ville jeg være som barn:</p></span><?php echo nl2br(htmlspecialchars($entry['childhood'])); ?>
-                            <span class="enteriesspørgsmål"><p>Mit største ønske er:</p></span><?php echo htmlspecialchars($entry['wish']); ?><br>
-                            <span class="enteriesspørgsmål"><p>Min livret:</p></span><?php echo nl2br(htmlspecialchars($entry['food'])); ?><br>
-                            <span class="enteriesspørgsmål"><p>Det syntes jeg er sejt:</p></span><?php echo htmlspecialchars($entry['cool']); ?><br>
-                            <span class="enteriesspørgsmål"><p>Skriv en besked til du holder af:</p></span><?php echo nl2br(htmlspecialchars($entry['message'])); ?><br>
+                            <span class="enteriesspørgsmål"><p>Det er jeg bedst til?:</p></span><?php echo htmlspecialchars($entry['best']); ?>
+                            <span class="enteriesspørgsmål"><p>Hvad ville jeg være som barn?:</p></span><?php echo nl2br(htmlspecialchars($entry['childhood'])); ?>
+                            <span class="enteriesspørgsmål"><p>Mit største ønske er?:</p></span><?php echo htmlspecialchars($entry['wish']); ?><br>
+                            <span class="enteriesspørgsmål"><p>Min livret?:</p></span><?php echo nl2br(htmlspecialchars($entry['food'])); ?><br>
+                            <span class="enteriesspørgsmål"><p>Hvem er din Flamme?:</p></span><?php echo htmlspecialchars($entry['cool']); ?><br>
+                            <span class="enteriesspørgsmål"><p>Det syntes jeg er sejt?:</p></span><?php echo htmlspecialchars($entry['cool']); ?><br>
+                            <span class="enteriesspørgsmål"><p>Skriv en besked til en du holder af?:</p></span><?php echo nl2br(htmlspecialchars($entry['message'])); ?><br>
                         </div>
                     </div>
                 <?php endforeach; ?>
