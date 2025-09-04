@@ -245,7 +245,12 @@ try {
                             </span>
                         </div>
                         <div class="entry-message">
-                            <?php echo nl2br(htmlspecialchars($entry['message'])); ?>
+                            <span class="enteriesspørgsmål"><p>Det er jeg bedst til:</p></span><?php echo htmlspecialchars($entry['best']); ?>
+                            <span class="enteriesspørgsmål"><p>Hvad ville jeg være som barn:</p></span><?php echo nl2br(htmlspecialchars($entry['childhood'])); ?>
+                            <span class="enteriesspørgsmål"><p>Mit største ønske er:</p></span><?php echo htmlspecialchars($entry['wish']); ?><br>
+                            <span class="enteriesspørgsmål"><p>Min livret:</p></span><?php echo nl2br(htmlspecialchars($entry['food'])); ?><br>
+                            <span class="enteriesspørgsmål"><p>Det syntes jeg er sejt:</p></span><?php echo htmlspecialchars($entry['cool']); ?><br>
+                            <span class="enteriesspørgsmål"><p>Skriv en besked til du holder af:</p></span><?php echo nl2br(htmlspecialchars($entry['message'])); ?><br>
                         </div>
                     </div>
                 <?php endforeach; ?>

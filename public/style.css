@@ -220,3 +220,11 @@ blink {
     50% { opacity: 0; }
 }
 
+.enteriesspørgsmål{
+    color: #f4059f;
+    margin-bottom: 30px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;
+
+}
