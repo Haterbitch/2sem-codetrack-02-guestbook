@@ -27,7 +27,7 @@ try {
             flame TEXT,
             cool TEXT,
             website TEXT,
-            message TEXT NOT NULL,
+            message TEXT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ');
@@ -65,12 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Navnet er for langt (max 100 tegn).';
         } elseif (strlen($message) > 500) {
             $error = 'Beskeden er for lang (max 500 tegn).';
-        } elseif (!empty($website)) {
-            // Valider website URL hvis udfyldt
-            if (strlen($website) > 200) {
-                $error = 'Website URL er for lang (max 200 tegn).';
-            } elseif (!filter_var($website, FILTER_VALIDATE_URL)) {
-                $error = 'Indtast en gyldig website URL eller lad feltet være tomt.';
             }
         }
 
@@ -112,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-    }
 }
 
 // Generér ny CSRF token hvis nødvendigt
@@ -161,7 +154,7 @@ try {
 
             <br>
             <div style="margin-top:10px; font-size:16px; font-style: italic">
-                Hvis du er var barn/ung i slut 90'erne eller 00'erne så har du sikkert udfyldt en Veninde bog. Her er min digitale version.
+                Hvis du er var barn/ung i slut 90'erne eller i 00'erne så har du sikkert udfyldt en Veninde bog. Her er min digitale version.
                 <br>
                 <blink><b>Udfyld</b></blink> den selv, og <blink><b>send</b></blink> den videre og se hvem af dine veninder der udfylder <blink>★</blink
             </div>
@@ -230,7 +223,7 @@ try {
         </div>
 
         <div class="entries">
-            <h2><?php echo count($entries); ?> Entries</h2>
+            <h2><?php echo count($entries); ?> Besvarelser</h2>
 
             <?php if (empty($entries)): ?>
                 <div class="no-entries">
@@ -243,9 +236,7 @@ try {
                             <?php echo htmlspecialchars($entry['name']); ?>
                             <?php if (!empty($entry['website'])): ?>
                                 -
-                                <a href="<?php echo htmlspecialchars($entry['website']); ?>" target="_blank" rel="noopener">
-                                    Website
-                                </a>
+
                             <?php endif; ?>
                             <span class="entry-date">
                                 <?php echo date('F j, Y \a\t g:i A', strtotime($entry['created_at'])); ?>
@@ -256,7 +247,7 @@ try {
                             <span class="enteriesspørgsmål"><p>Hvad ville jeg være som barn?:</p></span><?php echo nl2br(htmlspecialchars($entry['childhood'])); ?>
                             <span class="enteriesspørgsmål"><p>Mit største ønske er?:</p></span><?php echo htmlspecialchars($entry['wish']); ?><br>
                             <span class="enteriesspørgsmål"><p>Min livret?:</p></span><?php echo nl2br(htmlspecialchars($entry['food'])); ?><br>
-                            <span class="enteriesspørgsmål"><p>Hvem er din Flamme?:</p></span><?php echo htmlspecialchars($entry['cool']); ?><br>
+                            <span class="enteriesspørgsmål"><p>Hvem er din Flamme?:</p></span><?php echo htmlspecialchars($entry['flame']); ?><br>
                             <span class="enteriesspørgsmål"><p>Det syntes jeg er sejt?:</p></span><?php echo htmlspecialchars($entry['cool']); ?><br>
                             <span class="enteriesspørgsmål"><p>Skriv en besked til en du holder af?:</p></span><?php echo nl2br(htmlspecialchars($entry['message'])); ?><br>
                         </div>
