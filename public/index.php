@@ -24,6 +24,7 @@ try {
             childhood TEXT,
             wish TEXT,
             food TEXT,
+            flame TEXT,
             cool TEXT,
             website TEXT,
             message TEXT NOT NULL,
@@ -52,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $childhood = trim($_POST['childhood'] ?? '');
         $wish      = trim($_POST['wish'] ?? '');
         $food      = trim($_POST['food'] ?? '');
+        $flame     = trim($_POST['flame'] ?? '');
         $cool      = trim($_POST['cool'] ?? '');
         $website   = trim($_POST['website'] ?? '');
         $message   = trim($_POST['message'] ?? '');
@@ -77,11 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $stmt = $pdo->prepare('
                     INSERT INTO entries
-                        (name, best, childhood, wish, food, cool, website, message)
+                        (name, best, childhood, wish, food, flame, cool, website, message)
                     VALUES
                         (?, ?, ?, ?, ?, ?, ?, ?)
                 ');
-                $stmt->execute([$name, $best, $childhood, $wish, $food, $cool, $website, $message]);
+                $stmt->execute([$name, $best, $childhood, $wish, $food, $flame, $cool, $website, $message]);
 
                 // Gem navn og website i cookies i 30 dage
                 $expiry = time() + (30 * 24 * 60 * 60); // 30 dage
